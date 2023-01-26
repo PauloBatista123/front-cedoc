@@ -24,6 +24,7 @@ import {useMutation} from '@tanstack/react-query';
 import { api } from '../../lib/axios';
 import { AxiosError } from 'axios';
 import { queryClient } from '../../lib/reactQuery';
+import { useMutationAdd } from '../../hooks/TipoDocumental/useMutationAdd';
 
 
 interface ModalFormProps {
@@ -31,13 +32,6 @@ interface ModalFormProps {
   onClose: () => void;
 }
 
-interface AxiosErrorResponse {
-  response: {
-    data: {
-      msg: string;
-    }
-  }
-}
 
 // validação do formulario
 const newFormSchema = zod.object({
@@ -45,7 +39,7 @@ const newFormSchema = zod.object({
   temporalidade: zod.number({required_error: "O campo temporalidade não pode ser vazio.", invalid_type_error: "O campo temporalidade deve ser um número."}).min(1, { message: "O valor deve ser maior que 0"}),
 });
 
-type newFormData = zod.infer<typeof newFormSchema>;
+export type newFormData = zod.infer<typeof newFormSchema>;
 
 
 export function ModalForm({isOpen, onClose}: ModalFormProps) {
@@ -55,22 +49,7 @@ export function ModalForm({isOpen, onClose}: ModalFormProps) {
     defaultValues: { descricao: undefined, temporalidade: undefined },
   });
 
-  const toast = useToast();
-  const createTipoDocumento = useMutation(async (tipo: newFormData) => {
-    const response = await api.post('tipo-documento', {
-      ...tipo
-  });
-
-    return response.data;
-  }, {
-    onSuccess: (response) => {
-      queryClient.invalidateQueries(['tipo-documentos']);
-      toast({title: 'Tipo documental criado com sucesso!', description: `${response.msg}`, status: 'success', duration: 5000, isClosable: true, position: "top-right"});
-    },
-    onError: (err: AxiosErrorResponse) => {
-      toast({title: 'Erro na criação!', description: `${err.response?.data.msg}`, status: 'warning', duration: 5000, isClosable: true, position: "top-right"});
-    }
-  });
+  const createTipoDocumento = useMutationAdd();
 
   const handlleCreateNewTipo = async (data: newFormData) => {
     await createTipoDocumento.mutateAsync(data);

@@ -22,7 +22,7 @@ import * as zod from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import { api } from '../../lib/axios';
 import { queryClient } from '../../lib/reactQuery';
-import { useMutationEdit } from '../../hooks/useMutationEdit';
+import { useMutationEdit } from '../../hooks/TipoDocumental/useMutationEdit';
 
 interface DialogEditTipoDocumentoProps{
   isOpen: boolean;
