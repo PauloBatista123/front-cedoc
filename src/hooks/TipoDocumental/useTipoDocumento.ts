@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import {useQuery} from '@tanstack/react-query'
-import { api } from '../lib/axios';
+import { api } from '../../lib/axios';
 
 interface TipoDocumento {
   id: number;
@@ -35,9 +35,6 @@ async function getTipoDocumentos({page, filter}: UseTipoDocumentosProps): Promis
     return response.data;
   });
 
-  console.log(response);
-
-
   const tipos: TipoDocumento[] = response.data.map((item: TipoDocumento) => {
     return {
       id: item.id,
@@ -63,5 +60,5 @@ async function getTipoDocumentos({page, filter}: UseTipoDocumentosProps): Promis
 }
 
 export function useTipoDocumentos({page, filter}: UseTipoDocumentosProps) {
-  return useQuery(['tipo-documentos', {page, filter}], () => getTipoDocumentos({page, filter}));
+  return useQuery(['tipo-documentos', {page, filter}], () => getTipoDocumentos({page, filter}) );
 }

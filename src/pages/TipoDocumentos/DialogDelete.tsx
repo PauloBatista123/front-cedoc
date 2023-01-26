@@ -6,10 +6,9 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   Button,
-  useDisclosure,
   useToast,
 } from '@chakra-ui/react'
-import { useRef, RefObject, useEffect, useContext } from 'react';
+import { useRef } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../../lib/axios';
 import { queryClient } from '../../lib/reactQuery';

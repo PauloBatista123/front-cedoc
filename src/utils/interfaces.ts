@@ -5,3 +5,11 @@ export interface TipoDocumento {
   created_at: string;
   updated_at: string;
 }
+
+export interface Unidade {
+  id: number;
+  nome: string;
+  created_at: string;
+  updated_at: string;
+  status: 'ativo' | 'inativo';
+}

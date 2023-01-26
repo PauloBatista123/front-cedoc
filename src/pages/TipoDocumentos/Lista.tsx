@@ -2,11 +2,9 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   Box,
   IconButton,
@@ -15,9 +13,8 @@ import {
 } from '@chakra-ui/react'
 import { NotePencil, Trash } from 'phosphor-react';
 import { Fragment, useEffect, useState } from 'react';
-import { TipoDocumentos } from '.';
 import { Pagination } from '../../components/Pagination/Index';
-import { useTipoDocumentos } from '../../hooks/useTipoDocumento';
+import { useTipoDocumentos } from '../../hooks/TipoDocumental/useTipoDocumento';
 import { formatTemporalidade } from '../../utils/formatter';
 import { ActionList } from './ActinoList';
 import { AlertDialogDelete } from './DialogDelete';
@@ -74,7 +71,7 @@ export function Lista() {
       />
     )}
 
-     {/* DIALOG DELETE */}
+     {/* DIALOG EDIT */}
      {tipoEdit && (
       <DialogEditTipoDocumento 
         isOpen={isOpenEdit}

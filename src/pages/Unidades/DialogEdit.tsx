@@ -14,36 +14,37 @@ import {
 } from '@chakra-ui/react'
 import { FloppyDisk } from 'phosphor-react';
 import { Input } from '../../components/Form/Input';
-import { TipoDocumento } from '../../utils/interfaces';
+import { Unidade } from '../../utils/interfaces';
 import {useForm} from 'react-hook-form';
 import * as zod from 'zod';
-import { useMutationEdit } from '../../hooks/TipoDocumental/useMutationEdit';
+import { useMutationEdit } from '../../hooks/Unidade/useMutationEdit';
+import { Select } from '../../components/Form/Select';
 
 interface DialogEditTipoDocumentoProps{
   isOpen: boolean;
   onClose: () => void;
-  tipoDocumento: TipoDocumento;
+  unidade: Unidade;
 }
 
 // validação do formulario
 const updateFormSchema = zod.object({
-  descricao: zod.string({required_error: "O campo descricao não pode ser vazio."}).max(191, { message: "O campo pode conter no máxiom 191 caracteres"}).min(1, { message: "O campo pode conter no mínimo 1 caracteres"}),
-  temporalidade: zod.number({required_error: "O campo temporalidade não pode ser vazio.", invalid_type_error: "O campo temporalidade deve ser um número."}).min(1, { message: "O valor deve ser maior que 0"}),
+  nome: zod.string({required_error: "O campo nome não pode ser vazio."}).max(191, { message: "O campo pode conter no máxiom 191 caracteres"}).min(1, { message: "O campo pode conter no mínimo 1 caracteres"}),
+  status: zod.enum(['ativo', 'inativo'], {required_error: "O campo status não pode ser vazio.", invalid_type_error: "O campo status deve ser um número."}),
 });
 
 export type updateFormData = zod.infer<typeof updateFormSchema>;
 
-export function DialogEditTipoDocumento({isOpen, onClose, tipoDocumento}: DialogEditTipoDocumentoProps){
+export function DialogEditUnidade({isOpen, onClose, unidade}: DialogEditTipoDocumentoProps){
   // INICIALIZAÇÃO DO FORMDATA
   const {handleSubmit, register, formState: {errors, isSubmitting}, reset} = useForm<updateFormData>({
     values: {
-      descricao: tipoDocumento.descricao,
-      temporalidade: tipoDocumento.temporalidade, 
+      nome: unidade.nome,
+      status: unidade.status, 
     }
   });
 
   // CHAMADA DE HOOK PARA EDITAR - HOOK
-  const updateTipoDocumentoMutation = useMutationEdit(tipoDocumento);
+  const updateTipoDocumentoMutation = useMutationEdit(unidade);
 
 
   // FUNÇÃO DISPARADA NO CLIQUE DO BOTÃO SALVAR
@@ -67,7 +68,7 @@ export function DialogEditTipoDocumento({isOpen, onClose, tipoDocumento}: Dialog
           <DrawerHeader
            borderBottom="1px solid #ece7e7a9"
           >
-            Editar Tipo Documental
+            Editar Unidade
           </DrawerHeader>
 
           <DrawerBody>
@@ -80,18 +81,21 @@ export function DialogEditTipoDocumento({isOpen, onClose, tipoDocumento}: Dialog
                 <Input
                   type='text'
                   placeholder='Descrição do tipo documental'
-                  {...register('descricao', {required: true})}
-                  error={errors.descricao}
+                  {...register('nome', {required: true})}
+                  error={errors.nome}
                 />
               </InputGroup>
               
                 
-                <Input
-                  type='number'
-                  placeholder='Temporalidade em dias'
-                  {...register('temporalidade',
-                  {valueAsNumber:true})} 
-                  error={errors.temporalidade}
+                <Select
+                  placeholder='Status'
+                  {...register('status')}
+                  error={errors.status}
+                  options={[
+                    { value: 'ativo', optionText: 'ATIVO' },
+                    { value: 'inativo', optionText: 'INATIVO' },
+                  ]}
+                  size={"lg"}
                 />
               
             </Stack>

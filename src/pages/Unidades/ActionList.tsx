@@ -1,11 +1,11 @@
-import { Box, Button, Flex, Heading, SimpleGrid, useDisclosure, Icon, InputGroup, InputLeftElement, Input, Stack, HStack, IconButton } from "@chakra-ui/react";
-import { Eraser, Funnel, MagnifyingGlass, Plus } from "phosphor-react";
+import { Button, Flex, Heading, HStack, IconButton, SimpleGrid, useDisclosure, Icon } from "@chakra-ui/react";
 import { useFormContext } from "react-hook-form";
-import { useTipoDocumentos } from "../../hooks/TipoDocumental/useTipoDocumento";
+import {BsFunnel, BsPlusCircle} from "react-icons/bs"
+import {RiFilterOffFill} from "react-icons/ri"
 import { DialogFilter } from "./DialogFilter";
 import { ModalForm } from "./ModalForm";
 
-export function ActionList() {
+export function ActionList(){
 
   const { 
     isOpen: isOpenAdd, 
@@ -26,7 +26,6 @@ export function ActionList() {
     setValue("actionFilter", null);
   }
 
-  
   return (
     <SimpleGrid
       mb={"6"}
@@ -34,16 +33,16 @@ export function ActionList() {
       p={"4"}
     >
       <Flex justify="space-between" align="center">
-        <Heading size={"md"} fontWeight="normal" >Lista de tipos...</Heading>
+        <Heading size={"md"} fontWeight="normal" >Lista de unidades...</Heading>
         <Flex align="end">
           <HStack>
           {is_filter && (
-            <IconButton aria-label='Limpar' onClick={limparFiltro} as="a" size={"md"} fontSize="sm" colorScheme={"gray"} cursor={"pointer"} mr={"2"} icon={<Eraser />}></IconButton>
+            <IconButton aria-label='Limpar' onClick={limparFiltro} as="a" size={"md"} fontSize="sm" colorScheme={"gray"} cursor={"pointer"} mr={"2"} icon={<RiFilterOffFill />}></IconButton>
           )}
-            <Button onClick={onOpenFilter} as="a" size={"md"} fontSize="sm" colorScheme={"twitter"} cursor={"pointer"} leftIcon={<Icon as={Funnel} onClick={onOpenFilter} fontSize="20"></Icon>}>
+            <Button onClick={onOpenFilter} as="a" size={"md"} fontSize="sm" colorScheme={"twitter"} cursor={"pointer"} leftIcon={<Icon as={BsFunnel} onClick={onOpenFilter} fontSize="20"></Icon>}>
               Filtrar
             </Button>
-            <Button onClick={onOpenAdd} as="a" size={"md"} fontSize="sm" colorScheme={"blue"} cursor={"pointer"} leftIcon={<Icon as={Plus} onClick={onOpenAdd} fontSize="20"></Icon>}>
+            <Button onClick={onOpenAdd} as="a" size={"md"} fontSize="sm" colorScheme={"blue"} cursor={"pointer"} leftIcon={<Icon as={BsPlusCircle} onClick={onOpenAdd} fontSize="20"></Icon>}>
               Novo
             </Button>
           </HStack>     

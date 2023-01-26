@@ -2,7 +2,7 @@ import { Box, HStack, Text } from "@chakra-ui/react";
 import { FilePlus } from "phosphor-react";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useTipoDocumentos } from "../../hooks/useTipoDocumento";
+import { useTipoDocumentos } from "../../hooks/TipoDocumental/useTipoDocumento";
 import { Lista } from "./Lista";
 
 export function TipoDocumentos(){
