@@ -1,4 +1,5 @@
 import { Box, Button, Stack, Text } from "@chakra-ui/react";
+import { useCallback } from "react";
 import { PaginationItem } from "./PaginationItem";
 
 interface PaginationProps {
@@ -13,11 +14,11 @@ interface PaginationProps {
 
 const siblingsCount = 1;
 
-function generatePagesArray(from: number, to: number){
+const generatePagesArray = (from: number, to: number) => {
   return [...new Array(to - from)].map((_, index) => {
     return from + index + 1;
   }).filter(page => page > 0);
-}
+};
 
 export function Pagination({ 
   totalCountofRegisters = 1, registerPerPage = 15, currentPage = 1, onPageChange, numberToPage = 1, lastPage = 1, numberOfItens = 1

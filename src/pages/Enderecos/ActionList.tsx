@@ -3,7 +3,6 @@ import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
 import {BsFunnel, BsPlusCircle} from "react-icons/bs"
 import {RiFilterOffFill} from "react-icons/ri"
-import { DialogFilter } from "./DialogFilter";
 import { ModalForm } from "./ModalForm";
 
 export function ActionList(){
@@ -34,7 +33,7 @@ export function ActionList(){
       p={"4"}
     >
       <Flex justify="space-between" align="center">
-        <Heading size={"md"} fontWeight="normal" >Lista de unidades...</Heading>
+        <Heading size={"md"} fontWeight="normal" >Lista de endereços...</Heading>
         <Flex align="end">
           <HStack>
           {is_filter && (
@@ -54,11 +53,6 @@ export function ActionList(){
       <ModalForm
         isOpen={isOpenAdd}
         onClose={onCloseAdd}
-      />
-
-      <DialogFilter 
-        isOpen={isOpenFilter}
-        onClose={onCloseFilter}
       />
 
     </SimpleGrid>

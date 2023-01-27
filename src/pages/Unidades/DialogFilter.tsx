@@ -18,6 +18,7 @@ import {
   FormLabel,
 } from '@chakra-ui/react'
 import { ArrowCircleRight, MagnifyingGlass } from 'phosphor-react'
+import { useCallback } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
 
 interface DialogFilterProps {
@@ -34,10 +35,10 @@ export function DialogFilter({ isOpen, onClose}: DialogFilterProps){
   const {setValue, getValues: getValuesContext, formState: {isSubmitting}} = useFormContext();
   const { register, getValues: getValueForm } = useForm();
 
-  const handlleFilter = () => {
+  const handlleFilter = useCallback(() => {
     setValue('actionFilter', getValueForm('filtro'));
     onClose();
-  }
+  }, []);
 
   return (
     <Drawer

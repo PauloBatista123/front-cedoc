@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import {useQuery} from '@tanstack/react-query'
 import { api } from '../../lib/axios';
+import { MetaPagination } from '../../utils/interfaces';
 
 interface TipoDocumento {
   id: number;
@@ -13,13 +14,7 @@ interface TipoDocumento {
 
 interface GetTipoDocumentoResponse {
   tipos: TipoDocumento[];
-  meta: {
-    current_page: number;
-    last_page: number;
-    per_page: number;
-    to: number;
-    total: number;
-  }
+  meta: MetaPagination;
 }
 
 interface UseTipoDocumentosProps {

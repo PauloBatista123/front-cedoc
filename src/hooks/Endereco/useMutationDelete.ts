@@ -4,18 +4,17 @@ import { api } from "../../lib/axios";
 import { queryClient } from "../../lib/reactQuery";
 import { AxiosErrorData } from "../../utils/interfaces";
 
-
 export function useMutationDelete(){
   const toast = useToast();
-  return useMutation(async (tipoId: string) => {
-    const response = await api.delete(`unidade/${tipoId}`);
+  return useMutation(async (enderecoId: string) => {
+    const response = await api.delete(`endereco/${enderecoId}`);
     return response;
   }, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['unidades']);
+      queryClient.invalidateQueries(['enderecos']);
       toast({
         title: 'Sucesso!',
-        description: `Registro deletadocom sucesso!`,
+        description: `Registro deletado com sucesso!`,
         status: 'success',
         duration: 9000,
         isClosable: true,
@@ -23,6 +22,7 @@ export function useMutationDelete(){
       })
     },
     onError: (err: AxiosErrorData) => {
+      console.log(err);
       toast({
         title: 'Erro!',
         description: err.response?.data.detalhes,
