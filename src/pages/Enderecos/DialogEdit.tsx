@@ -15,14 +15,14 @@ import {
 import { FloppyDisk } from 'phosphor-react';
 import { Input } from '../../components/Form/Input';
 import { Endereco } from '../../utils/interfaces';
-import {useForm, Controller} from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import * as zod from 'zod';
 import { useMutationEdit } from '../../hooks/Endereco/useMutationEdit';
 import { validationSchemaEndereco } from '../../utils/schemas';
 import { useUnidades } from '../../hooks/Unidade/useUnidades';
 import Select from "react-select"
 
-interface DialogEditEnderecoProps{
+interface DialogEditEnderecoProps {
   isOpen: boolean;
   onClose: () => void;
   endereco: Endereco;
@@ -33,12 +33,12 @@ const updateFormSchema = validationSchemaEndereco;
 
 export type updateFormData = zod.infer<typeof updateFormSchema>;
 
-export function DialogEditEndereco({isOpen, onClose, endereco}: DialogEditEnderecoProps){
+export function DialogEditEndereco({ isOpen, onClose, endereco }: DialogEditEnderecoProps) {
   // INICIALIZAÇÃO DO FORMDATA
-  const {handleSubmit, register, formState: {errors, isSubmitting}, reset, control} = useForm<updateFormData>({
+  const { handleSubmit, register, formState: { errors, isSubmitting }, reset, control } = useForm<updateFormData>({
     values: {
       andar: endereco.andar,
-      rua: endereco.rua, 
+      rua: endereco.rua,
       avenida: endereco.avenida,
       unidade_id: endereco.unidade_id,
     }
@@ -56,29 +56,29 @@ export function DialogEditEndereco({isOpen, onClose, endereco}: DialogEditEndere
 
   // FUNÇÃO DISPARADA NO CLIQUE DO BOTÃO SALVAR
   const handlleEditEndereco = async (data: updateFormData) => {
-      await updateEnderecoMutation.mutateAsync(data);
-      onClose();
-      reset();
+    await updateEnderecoMutation.mutateAsync(data);
+    onClose();
+    reset();
   }
 
   // VIEW
   return (
     <Drawer
-        isOpen={isOpen}
-        placement='right'
-        onClose={onClose}
-        size={"lg"}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader
-           borderBottom="1px solid #ece7e7a9"
-          >
-            Editar Endereco
-          </DrawerHeader>
+      isOpen={isOpen}
+      placement='right'
+      onClose={onClose}
+      size={"lg"}
+    >
+      <DrawerOverlay />
+      <DrawerContent>
+        <DrawerCloseButton />
+        <DrawerHeader
+          borderBottom="1px solid #ece7e7a9"
+        >
+          Editar Endereco
+        </DrawerHeader>
 
-          <DrawerBody>
+        <DrawerBody>
           {/* formulário de cadastro */}
           <Stack
             spacing={"4"}
@@ -151,14 +151,14 @@ export function DialogEditEndereco({isOpen, onClose, endereco}: DialogEditEndere
           {/* formulário de cadastro */}
         </DrawerBody>
 
-          <DrawerFooter>
+        <DrawerFooter>
 
           <Box
             display={"flex"}
             flex={"1"}
             justifyContent={"flex-end"}
           >
-          <Button
+            <Button
               variant={'outline'}
               borderColor={"gray.200"}
               size={'lg'}
@@ -168,29 +168,29 @@ export function DialogEditEndereco({isOpen, onClose, endereco}: DialogEditEndere
               Cancelar
             </Button>
             <Button
-             variant={'solid'}
-             borderColor={"gray.200"}
-             size={'lg'}
-             width={"50%"}
-             ml={"2"}
-             bgColor={"blue.700"}
-             color={"white"}
-             _hover={{
-              bgColor: "blue.500"
-             }}
-             rightIcon={
-              <FloppyDisk />
-             }
-             onClick={handleSubmit(handlleEditEndereco)}
-             isLoading={isSubmitting}
-             loadingText={"Enviando..."}
+              variant={'solid'}
+              borderColor={"gray.200"}
+              size={'lg'}
+              width={"50%"}
+              ml={"2"}
+              bgColor={"blue.700"}
+              color={"white"}
+              _hover={{
+                bgColor: "blue.500"
+              }}
+              rightIcon={
+                <FloppyDisk />
+              }
+              onClick={handleSubmit(handlleEditEndereco)}
+              isLoading={isSubmitting}
+              loadingText={"Enviando..."}
             >
               Salvar
             </Button>
           </Box>
 
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 }

@@ -1,9 +1,7 @@
 import { Box, HStack, Text } from "@chakra-ui/react";
-import { FilePlus } from "phosphor-react";
-import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useTipoDocumentos } from "../../hooks/TipoDocumental/useTipoDocumento";
 import { Lista } from "./Lista";
+import { BsFillTagsFill } from "react-icons/bs";
 
 export function TipoDocumentos(){
 
@@ -20,7 +18,7 @@ export function TipoDocumentos(){
       flexDirection={"row"}
     >
         <HStack>
-          <FilePlus weight="fill" size={"32"} color={"#003641"}/>
+          <BsFillTagsFill size={"32"} color={"#003641"}/>
           <Text
             fontSize={"2xl"}
             

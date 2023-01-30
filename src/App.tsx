@@ -5,12 +5,13 @@ import { theme } from "./styles/theme";
 import {QueryClientProvider} from '@tanstack/react-query';
 import { queryClient } from "./lib/reactQuery";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { NavBarContextProvider } from "./contexts/NavBarContext";
 
 export function App() {
   return (
     <ChakraProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+          <RouterProvider router={router} />
 
         <ReactQueryDevtools />
       </QueryClientProvider>

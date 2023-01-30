@@ -16,6 +16,7 @@ export function Dashboard(){
 
     >
       <Header />
+      <NavBar />
       {/* render children routes from dashboard */}
 
     <Box
