@@ -4,7 +4,6 @@ import { useFormContext } from "react-hook-form";
 import {BsFunnel, BsPlusCircle} from "react-icons/bs"
 import {RiFilterOffFill} from "react-icons/ri"
 import { DialogFilter } from "./DialogFilter";
-import { ModalForm } from "./ModalForm";
 
 export function ActionList(){
 
@@ -34,28 +33,23 @@ export function ActionList(){
       p={"4"}
     >
       <Flex justify="space-between" align="center">
-        <Heading size={"md"} fontWeight="normal" >Lista de endereços...</Heading>
+        <Heading size={"md"} fontWeight="normal" >Lista de documentos...</Heading>
         <Flex align="end">
           <HStack>
           {is_filter && (
             <IconButton aria-label='Limpar' onClick={limparFiltro} as="a" size={"md"} fontSize="sm" colorScheme={"gray"} cursor={"pointer"} mr={"2"} icon={<RiFilterOffFill />}></IconButton>
           )}
-            <Button onClick={onOpenFilter} as="a" size={"md"} fontSize="sm" colorScheme={"twitter"} cursor={"pointer"} leftIcon={<Icon as={BsFunnel} onClick={onOpenFilter} fontSize="20"></Icon>}>
+            {/* <Button onClick={onOpenFilter} as="a" size={"md"} fontSize="sm" colorScheme={"twitter"} cursor={"pointer"} leftIcon={<Icon as={BsFunnel} onClick={onOpenFilter} fontSize="20"></Icon>}>
               Filtrar
             </Button>
             <Button onClick={onOpenAdd} as="a" size={"md"} fontSize="sm" colorScheme={"blue"} cursor={"pointer"} leftIcon={<Icon as={BsPlusCircle} onClick={onOpenAdd} fontSize="20"></Icon>}>
               Novo
-            </Button>
+            </Button> */}
           </HStack>     
             
         </Flex>
 
       </Flex>
-      <ModalForm
-        isOpen={isOpenAdd}
-        onClose={onCloseAdd}
-      />
-
       <DialogFilter 
         isOpen={isOpenFilter}
         onClose={onCloseFilter}

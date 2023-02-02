@@ -1,10 +1,11 @@
 import { Box, HStack, Text } from "@chakra-ui/react";
+import { FormProvider, useForm } from "react-hook-form";
+import {GrDocumentVerified} from "react-icons/gr"
 import { Lista } from "./Lista";
-import { useForm, FormProvider } from "react-hook-form";
-import { SiGooglemaps } from "react-icons/si";
 
-export function Enderecos() {
+export function Documentos(){
   const form = useForm();
+
   return (
     <>
       <Box
@@ -16,7 +17,7 @@ export function Enderecos() {
         flexDirection={"row"}
       >
         <HStack>
-          <SiGooglemaps size={32} />
+          <GrDocumentVerified size={32} />
           <Text fontSize={"2xl"}>
             Documentos
           </Text>

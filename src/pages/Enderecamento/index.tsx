@@ -1,10 +1,11 @@
 import { Box, HStack, Text } from "@chakra-ui/react";
-import { Lista } from "./Lista";
+import { GrDocumentConfig } from "react-icons/gr";
+import { Formulario } from "./Formulario";
 import { useForm, FormProvider } from "react-hook-form";
-import { SiGooglemaps } from "react-icons/si";
 
-export function Enderecos() {
+export function Enderecamento(){
   const form = useForm();
+
   return (
     <>
       <Box
@@ -16,26 +17,22 @@ export function Enderecos() {
         flexDirection={"row"}
       >
         <HStack>
-          <SiGooglemaps size={32} />
+          <GrDocumentConfig size={32} />
           <Text fontSize={"2xl"}>
-            Documentos
+            Endereçamento
           </Text>
         </HStack>
       </Box>
 
       <Box
-        border={"1px solid #c0c0c065"}
         height="auto"
-        borderRadius={"8px"}
-        bgColor={"white"}
-        p={"6"}
         flexDirection={"row"}
         mt={"4"}
       >
         <FormProvider {...form}>
-          <Lista />
+          <Formulario />
         </FormProvider>
       </Box>
     </>
-  );
+  )
 }

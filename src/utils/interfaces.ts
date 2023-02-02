@@ -40,3 +40,52 @@ export interface AxiosErrorData {
     }
   }
 }
+
+interface Predio {
+  id: number;
+  numero: string;
+  observacao: string;
+  status: 'ativo' | 'inativo';
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Caixa {
+  id: number;
+  status: 'disponivel' | 'ocupado',
+  numero: string;
+  espaco_total: string;
+  espaco_ocupado: string;
+  espaco_disponivel: string;
+  predio_id: number;
+  andar_id: number;
+  created_at: string;
+  updated_at: string;
+  predio: Predio;
+  documentos: Documento[];
+}
+
+export interface Documento {
+  id: number;
+  documento: number;
+  observacao: string;
+  tipo_documento: TipoDocumento;
+  caixa: Caixa;
+  espaco_ocupado: string;
+  status: 'aguardando' | 'emprestimo' | 'arquivado';
+  created_at: string;
+  updated_at: string;
+
+}
+
+export interface ProximoEndereco {
+  caixa_id: number;
+  predio_id: number;
+  andar_id: number;
+  ultima_caixa: Caixa;
+  espaco_disponivel_predio: string;
+  total_documentos_predio: number;
+  total_caixas_predio: number;
+  espaco_ocupado_documento: string;
+  numero_documento: number;
+}

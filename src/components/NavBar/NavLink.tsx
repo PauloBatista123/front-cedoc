@@ -23,6 +23,7 @@ export function NavLink({href, text, Icon}: NavLinkProps){
           gap={"2"} 
           align={"center"} 
           role="group"
+          
         >
           <IconChakra
             as={Icon}
@@ -34,13 +35,15 @@ export function NavLink({href, text, Icon}: NavLinkProps){
             }}
           />
           <Text
+            fontSize={"md"}
             borderBottom="2px solid transparent"
             _groupHover={{
               color: 'green.900',
               transition: 'all 0.3s',
               borderBottom: '2px solid #00A091'
             }}
-          >{text}
+          >
+            {text}
           </Text>
         </Flex>
      </Link>

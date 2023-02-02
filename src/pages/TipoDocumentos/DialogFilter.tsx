@@ -11,19 +11,14 @@ import {
   Stack,
   InputGroup,
   Text,
-  useToast,
   InputLeftElement,
   Input,
   Select,
   FormControl,
   FormLabel,
-  FormHelperText,
 } from '@chakra-ui/react'
-import { useMutation } from '@tanstack/react-query';
-import { ArrowCircleRight, FloppyDisk, MagnifyingGlass } from 'phosphor-react'
-import { useRef } from 'react';
+import { ArrowCircleRight, MagnifyingGlass } from 'phosphor-react'
 import { useForm, useFormContext } from 'react-hook-form';
-import { api } from '../../lib/axios';
 
 interface DialogFilterProps {
   isOpen: boolean,

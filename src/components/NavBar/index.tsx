@@ -14,13 +14,14 @@ import { NavContent } from "./NavContent";
 import { NavLink } from "./NavLink";
 import { SiGooglemaps, SiHomeassistantcommunitystore } from "react-icons/si";
 import { BsFillTagsFill } from "react-icons/bs";
+import {GrDocumentVerified} from "react-icons/gr"
 
 
 export function NavBar(){
   const {onClose, isOpen} = useContext(NavBarContext);
 
   return (
-    <Drawer placement="left" onClose={onClose} isOpen={isOpen} size={"sm"}>
+    <Drawer placement="left" onClose={onClose} isOpen={isOpen} size={"xs"}>
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
@@ -41,7 +42,7 @@ export function NavBar(){
             alignItems={"flex-start"}
           >
             <NavContent title="Cadastros">
-              <NavLink text="Endereços" Icon={SiGooglemaps} href={"/enderecos"}/>
+              <NavLink text="Documentos" Icon={GrDocumentVerified} href={"/documentos"}/>
               <NavLink text="Tipos Documentais" Icon={BsFillTagsFill} href={"/tipo-documentos"}/>
               <NavLink text="Unidades" Icon={SiHomeassistantcommunitystore} href={"/unidades"}/>
             </NavContent>
