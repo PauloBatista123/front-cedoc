@@ -1,18 +1,33 @@
-import { Badge, Box, Button, Divider, Flex, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
-import { Caixa } from "../../utils/interfaces";
+import { Badge, Box, Button, Flex, SimpleGrid, Text } from "@chakra-ui/react";
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
-import { Fragment } from "react";
+import { BsFolderCheck } from "react-icons/bs";
+import { Pagination } from "../../components/Pagination/Index";
+import { CaixasResponseProps } from "../../contexts/EnderecamentoContext";
+import { useMutationEnderecar } from "../../hooks/Documento/useMutationEnderecar";
+import { Caixa, ProximoEndereco } from "../../utils/interfaces";
+import {useFormContext} from "react-hook-form";
 
-interface ListaEnderecosProps {
-  caixas ?: Caixa[]
+interface ListaEnderecosProps extends ProximoEndereco{
+  caixas: CaixasResponseProps,
+  onPageChange: (page: number) => void,
+  setSearch: (search: boolean) => void;
 }
 
-export function ListaEnderecos({caixas}: ListaEnderecosProps){
+export function ListaEnderecos({caixas, onPageChange, espaco_ocupado_documento, numero_documento, setSearch}: ListaEnderecosProps){
+
+  const mutationForm = useMutationEnderecar();
+  const {reset} = useFormContext();
+
+  const handleSalvar = (caixa: Caixa) => {
+    mutationForm.mutateAsync({caixa_id: caixa.id, andar_id: caixa.andar_id, predio_id: caixa.predio_id, espaco_ocupado_documento, numero_documento});
+    setSearch(false);
+    reset();
+  }
+
   return(
     <Box mt={"8"}>
-      <Text fontSize={"lg"} color={"gray.600"} fontWeight="bold">Caixas localizadas com espaço disponível: </Text>
-      <SimpleGrid spacing={10} columns={3}  borderTop={"1px solid #d1d2dc"} pt={"8"}>
-        {caixas?.map(caixa => (
+      <SimpleGrid spacing={10} columns={3} >
+        {caixas.data?.map(caixa => (
           <Card 
             key={caixa.id}
             border={"1px solid #d1d2dc"}
@@ -22,11 +37,11 @@ export function ListaEnderecos({caixas}: ListaEnderecosProps){
           >
             <CardHeader>
               <Flex justify={"space-between"} align="center">
-                <Text fontWeight={"bold"} fontSize={"2xl"} color={"gray.500"}>Caixa Nº{caixa.numero}</Text>
+                <Text fontWeight={"bold"} fontSize={"2xl"} color={"gray.500"}>Caixa Nº{caixa.numero ?? 0}</Text>
                 <Badge borderRadius={"8px"} p="2" colorScheme={"green"}>{caixa.status} {caixa.espaco_disponivel}</Badge>
               </Flex>
               <Flex align={"start"}>
-                <Text color={"gray.400"} fontSize={"sm"} mr={"2"}>Prédio {caixa.predio.numero}</Text>
+                <Text color={"gray.400"} fontSize={"sm"} mr={"2"}>Prédio {caixa.predio.numero ?? 0}</Text>
                 <Text color={"gray.400"} fontSize={"sm"}>Andar {caixa.andar_id}</Text>
               </Flex>
             </CardHeader> 
@@ -36,13 +51,29 @@ export function ListaEnderecos({caixas}: ListaEnderecosProps){
               </Flex>
             </CardBody>
             <CardFooter>
-            <Button variant='solid' colorScheme='blue'>
+            <Button 
+              variant='solid' 
+              colorScheme='blue' 
+              rightIcon={<BsFolderCheck />} 
+              width={"100%"}
+              onClick={() => handleSalvar(caixa)}
+            >
               Arquivar
             </Button>
             </CardFooter>
           </Card>
         ))}
       </SimpleGrid >
+
+      <Pagination 
+        totalCountofRegisters={caixas.total}
+        currentPage={caixas.current_page}
+        onPageChange={onPageChange}
+        numberToPage={caixas.to}
+        lastPage={caixas.last_page}
+        numberOfItens={caixas.data?.length}
+        registerPerPage={caixas.per_page}
+      />
     </Box>
   );
 }

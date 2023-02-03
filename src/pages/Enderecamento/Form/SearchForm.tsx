@@ -1,27 +1,18 @@
 import { Box, Button, Flex } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
 import { HiOutlineDocumentSearch } from "react-icons/hi";
 import { Input } from "../../../components/Form/Input";
-import * as zod from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { validationSchemaEnderecamento } from "../../../utils/schemas";
-
-const formValidationSchema = validationSchemaEnderecamento;
-
-export type newFormData = zod.infer<typeof formValidationSchema>;
+import { newFormDataEnderecamentoSearch } from "../../../utils/schemas";
+import { useFormContext } from "react-hook-form";
 
 interface SearchFormProps {
-  handleSearch: (data: newFormData) => void;
+  handleSearch: (data: newFormDataEnderecamentoSearch) => void;
 }
 
 export function SearchForm({handleSearch}: SearchFormProps){
   
-  const {register, handleSubmit, formState: {isSubmitting}} = useForm({
-    resolver: zodResolver(formValidationSchema),
-    defaultValues: { numero: '', espaco_ocupado: ''}
-  });
+  const {register, handleSubmit, formState: {isSubmitting}} = useFormContext<newFormDataEnderecamentoSearch>();
 
-  const handleSubmitSearch = (data: newFormData) => {
+  const handleSubmitSearch = (data: newFormDataEnderecamentoSearch) => {
     handleSearch(data);
   }
 

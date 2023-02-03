@@ -8,12 +8,21 @@ import { AxiosErrorData, Caixa, ProximoEndereco } from "../utils/interfaces";
 interface EnderecamentoContextProps {
   children: ReactNode;
 }
+export interface CaixasResponseProps {
+    data: Caixa[],
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    to: number;
+    total: number;
+}
 
 type EnderecamentoContext = {
-  caixas: Caixa[],
+  caixas ?: CaixasResponseProps,
   proximoEndereco: ProximoEndereco | undefined,
   buscarEnderecos: (data: newFormData) => void,
-  salvarEnderecamento: () => void
+  salvarEnderecamento: () => void,
+  onPageChange: (page: number) => void
 }
 
 export interface SalvarEnderecamentoProps {
@@ -23,17 +32,19 @@ export interface SalvarEnderecamentoProps {
 export const EnderecamentoContext = createContext({} as EnderecamentoContext);
 
 export function EnderecamentoProvider({ children }: EnderecamentoContextProps) {
-  const [caixas, setCaixas] = useState<Caixa[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [caixas, setCaixas] = useState<CaixasResponseProps>();
   const [proximoEndereco, setProximoEndereco] = useState<ProximoEndereco | undefined>(undefined);
   const toast = useToast();
 
-  const buscarEnderecos = useCallback(async (data: newFormData) => {
+  const buscarEnderecos = async (data: newFormData) => {
     const response = await api.get('documento/espaco-disponivel', {
         params: {
-          ...data
+          ...data,
+          page,
         }
     }).then(response => {
-        setCaixas(response.data.caixas.data);
+        setCaixas(response.data.caixas);
         setProximoEndereco({
           caixa_id: response.data.proximo_endereco.caixa_id,
           predio_id: response.data.proximo_endereco.predio_id,
@@ -48,7 +59,15 @@ export function EnderecamentoProvider({ children }: EnderecamentoContextProps) {
     }).catch((error: AxiosErrorData) => {
       toast({title: 'Erro ao processar!', description: `${error.response.data.detalhes}`, status: 'info', duration: 5000, isClosable: true, position: "top-right"});
     })
-  }, []);
+  };
+
+  const onPageChange = (pageNumber: number) => {
+    buscarEnderecos({
+      numero: String(proximoEndereco?.numero_documento), 
+      espaco_ocupado: String(proximoEndereco?.espaco_ocupado_documento)
+    });
+    setPage(pageNumber);
+  }
 
   const salvarEnderecamento = useCallback(async () => {
     const response = await api.post('documento/enderecar', {
@@ -65,7 +84,7 @@ export function EnderecamentoProvider({ children }: EnderecamentoContextProps) {
   }, [proximoEndereco?.caixa_id, proximoEndereco?.predio_id, proximoEndereco?.andar_id, proximoEndereco?.numero_documento, proximoEndereco?.espaco_ocupado_documento]);
 
   return (
-    <EnderecamentoContext.Provider value={{ caixas, proximoEndereco, buscarEnderecos, salvarEnderecamento }}>
+    <EnderecamentoContext.Provider value={{ caixas, proximoEndereco, buscarEnderecos, salvarEnderecamento, onPageChange }}>
       {children}
     </EnderecamentoContext.Provider>
   )

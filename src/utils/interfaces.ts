@@ -36,7 +36,8 @@ export interface Endereco {
 export interface AxiosErrorData {
   response: {
     data: {
-      detalhes: string;
+      detalhes?: string;
+      error?: string;
     }
   }
 }
@@ -88,4 +89,12 @@ export interface ProximoEndereco {
   total_caixas_predio: number;
   espaco_ocupado_documento: string;
   numero_documento: number;
+}
+
+export interface useMutationEnderecarProps {
+  espaco_ocupado_documento: string;
+  numero_documento: number;
+  caixa_id: number;
+  predio_id: number;
+  andar_id: number;
 }

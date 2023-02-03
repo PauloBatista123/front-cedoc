@@ -2,9 +2,14 @@ import { Box, HStack, Text } from "@chakra-ui/react";
 import { GrDocumentConfig } from "react-icons/gr";
 import { Formulario } from "./Formulario";
 import { useForm, FormProvider } from "react-hook-form";
+import { validationSchemaEnderecamento } from "../../utils/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function Enderecamento(){
-  const form = useForm();
+  const methods = useForm({
+    resolver: zodResolver(validationSchemaEnderecamento),
+    defaultValues: { numero: '', espaco_ocupado: ''}
+  })
 
   return (
     <>
@@ -29,7 +34,7 @@ export function Enderecamento(){
         flexDirection={"row"}
         mt={"4"}
       >
-        <FormProvider {...form}>
+        <FormProvider {...methods}>
           <Formulario />
         </FormProvider>
       </Box>

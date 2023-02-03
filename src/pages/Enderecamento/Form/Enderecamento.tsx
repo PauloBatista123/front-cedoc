@@ -1,30 +1,36 @@
 import { Box, Button, Grid, Text } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import { useCallback } from "react";
+import { useFormContext } from "react-hook-form";
 import { HiOutlineCheckCircle } from "react-icons/hi";
 import { Input } from "../../../components/Form/Input";
+import { useMutationEnderecar } from "../../../hooks/Documento/useMutationEnderecar";
 import { ProximoEndereco } from "../../../utils/interfaces";
 
-interface EnderecamentoProps extends ProximoEndereco{
-  salvar: () => void;
+interface EnderecamenentoProps {
+  proximoEndereco: ProximoEndereco;
+  setSearch: (search: boolean) => void;
 }
 
-export function Enderecamenento({
-  caixa_id, 
-  predio_id, 
-  andar_id,
-  ultima_caixa, 
-  total_documentos_predio, 
-  total_caixas_predio,
-  espaco_disponivel_predio,
-  espaco_ocupado_documento,
-  salvar
-}: EnderecamentoProps){
 
-  const {register, handleSubmit} = useForm();
+export function Enderecamenento({proximoEndereco, setSearch}: EnderecamenentoProps){
+
+  const {reset} = useFormContext();
+  const mutationForm = useMutationEnderecar();
+  const {
+    caixa_id, 
+    predio_id, 
+    andar_id,
+    ultima_caixa, 
+    total_documentos_predio, 
+    total_caixas_predio,
+    espaco_disponivel_predio,
+  } = proximoEndereco;
 
   const handleSalvar = () => {
-    salvar();
-  }
+    mutationForm.mutateAsync(proximoEndereco);
+    setSearch(false);
+    reset();
+  };
 
   return(
     <Box 
@@ -38,23 +44,20 @@ export function Enderecamenento({
             <Input 
               label="Número da caixa:"
               type="text"
-              {...register("caixa")}
               value={caixa_id}
-              isReadOnly
+              name={'caixa_id'}
             />
             <Input 
               label="Número da Prédio:"
               type="text"
-              {...register("predio")}
+              name={'predio_id'}
               value={predio_id}
-              isReadOnly
             />
             <Input 
               label="Andar:"
               type="text"
-              {...register("andar")}
+              name={'andar_id'}
               value={andar_id}
-              isReadOnly
             />
             <Button 
               colorScheme={"green"}
@@ -69,7 +72,7 @@ export function Enderecamenento({
               loadingText={"Buscando..."}
               width={"100%"}
               mt={"4"}
-              onClick={handleSubmit(handleSalvar)}
+              onClick={handleSalvar}
             >
             Endereçar
           </Button>

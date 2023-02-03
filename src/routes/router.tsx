@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'enderecamento',
-        element: <EnderecamentoProvider><Enderecamento /></EnderecamentoProvider>
+        element: <Enderecamento />
       },
     ]
   }

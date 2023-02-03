@@ -42,9 +42,8 @@ export function NavBar(){
             alignItems={"flex-start"}
           >
             <NavContent title="Cadastros">
-              <NavLink text="Documentos" Icon={GrDocumentVerified} href={"/documentos"}/>
               <NavLink text="Tipos Documentais" Icon={BsFillTagsFill} href={"/tipo-documentos"}/>
-              <NavLink text="Unidades" Icon={SiHomeassistantcommunitystore} href={"/unidades"}/>
+              <NavLink text="Endereçamento" Icon={SiHomeassistantcommunitystore} href={"/enderecamento"}/>
             </NavContent>
           </Box>
         </DrawerBody>
