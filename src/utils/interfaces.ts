@@ -42,13 +42,15 @@ export interface AxiosErrorData {
   }
 }
 
-interface Predio {
+export interface Predio {
   id: number;
   numero: string;
   observacao: string;
   status: 'ativo' | 'inativo';
   created_at: string;
   updated_at: string;
+  caixas_count: number;
+  documentos_count: number;
 }
 
 export interface Caixa {
@@ -64,14 +66,22 @@ export interface Caixa {
   updated_at: string;
   predio: Predio;
   documentos: Documento[];
+  documentos_count: number;
 }
 
 export interface Documento {
   id: number;
   documento: number;
   observacao: string;
+  nome_cooperado: string;
+  cpf_cooperado: string;
+  valor_operacao?: string;
+  vencimento_operacao: string;
+  data_liquidacao: string;
+  data_expurgo: string;
   tipo_documento: TipoDocumento;
   caixa: Caixa;
+  predio: Predio;
   espaco_ocupado: string;
   status: 'aguardando' | 'emprestimo' | 'arquivado';
   created_at: string;
@@ -89,6 +99,9 @@ export interface ProximoEndereco {
   total_caixas_predio: number;
   espaco_ocupado_documento: string;
   numero_documento: number;
+  predios_disponiveis: {
+    predio_id: number;
+  }[];
 }
 
 export interface useMutationEnderecarProps {
@@ -97,4 +110,5 @@ export interface useMutationEnderecarProps {
   caixa_id: number;
   predio_id: number;
   andar_id: number;
+  observacao: string;
 }

@@ -10,6 +10,7 @@ export const validationSchemaEndereco = zod.object({
 export const validationSchemaEnderecamento = zod.object({
   numero: zod.string({ required_error: 'Informe o número do documento'}).max(191, { message: "O campo pode conter no máxiom 191 caracteres" }).min(1, { message: "O campo pode conter no mínimo 1 caracteres" }),
   espaco_ocupado: zod.string({ required_error: 'Informe o espaço ocupado pelo documento'}).max(191, { message: "O campo pode conter no máxiom 191 caracteres" }).min(1, { message: "O campo pode conter no mínimo 1 caracteres" }),
+  predio_id: zod.string().optional()
 })
 
 

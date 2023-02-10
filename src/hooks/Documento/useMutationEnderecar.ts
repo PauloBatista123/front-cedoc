@@ -20,7 +20,8 @@ export function useMutationEnderecar(){
       espaco_ocupado: endereco?.espaco_ocupado_documento, 
       numero_caixa: endereco?.caixa_id, 
       predio_id: endereco?.predio_id, 
-      andar_id: endereco?.andar_id
+      andar_id: endereco?.andar_id,
+      observacao: endereco?.observacao
   });
 
     return response.data;

@@ -13,7 +13,7 @@ import { NavBarContext } from "../../contexts/NavBarContext";
 import { NavContent } from "./NavContent";
 import { NavLink } from "./NavLink";
 import { SiGooglemaps, SiHomeassistantcommunitystore } from "react-icons/si";
-import { BsFillTagsFill } from "react-icons/bs";
+import { BsFillFileEarmarkTextFill, BsFillTagsFill } from "react-icons/bs";
 import {GrDocumentVerified} from "react-icons/gr"
 
 
@@ -43,6 +43,7 @@ export function NavBar(){
           >
             <NavContent title="Cadastros">
               <NavLink text="Tipos Documentais" Icon={BsFillTagsFill} href={"/tipo-documentos"}/>
+              <NavLink text="Dossiês" Icon={BsFillFileEarmarkTextFill} href={"/documentos"}/>
               <NavLink text="Endereçamento" Icon={SiHomeassistantcommunitystore} href={"/enderecamento"}/>
             </NavContent>
           </Box>

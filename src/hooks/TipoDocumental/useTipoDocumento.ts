@@ -40,13 +40,25 @@ async function getTipoDocumentos({page, filter}: UseTipoDocumentosProps): Promis
     }
   });
 
-  const meta = {
-    current_page: response.meta.current_page,
-    last_page: response.meta.last_page,
-    per_page: response.meta.per_page,
-    to: response.meta.to,
-    total: response.meta.total,
-  }
+    let meta;
+
+    if(Object.keys(response).some(key => key == 'meta')){
+      meta = {
+        current_page: response.meta.current_page,
+        last_page: response.meta.last_page,
+        per_page: response.meta.per_page,
+        to: response.meta.to,
+        total: response.meta.total,
+      }
+    }else{
+      meta = {
+        current_page: 1,
+        last_page: 1,
+        per_page: 1,
+        to: 1,
+        total: 1
+      }
+    }
 
   return {
     tipos,

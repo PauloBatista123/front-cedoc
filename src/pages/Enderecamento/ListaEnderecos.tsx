@@ -1,31 +1,45 @@
-import { Badge, Box, Button, Flex, SimpleGrid, Text } from "@chakra-ui/react";
+import { Badge, Box, Button, Divider, Flex, Select, SimpleGrid, Text } from "@chakra-ui/react";
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import { BsFolderCheck } from "react-icons/bs";
 import { Pagination } from "../../components/Pagination/Index";
 import { CaixasResponseProps } from "../../contexts/EnderecamentoContext";
 import { useMutationEnderecar } from "../../hooks/Documento/useMutationEnderecar";
-import { Caixa, ProximoEndereco } from "../../utils/interfaces";
+import { Caixa, Predio, ProximoEndereco } from "../../utils/interfaces";
 import {useFormContext} from "react-hook-form";
+import { TextArea } from "../../components/Form/TextArea";
 
 interface ListaEnderecosProps extends ProximoEndereco{
-  caixas: CaixasResponseProps,
-  onPageChange: (page: number) => void,
+  caixas: CaixasResponseProps;
+  onPageChange: (page: number) => void;
   setSearch: (search: boolean) => void;
 }
 
-export function ListaEnderecos({caixas, onPageChange, espaco_ocupado_documento, numero_documento, setSearch}: ListaEnderecosProps){
+export function ListaEnderecos({caixas, onPageChange, espaco_ocupado_documento, numero_documento, setSearch, predios_disponiveis}: ListaEnderecosProps){
 
   const mutationForm = useMutationEnderecar();
-  const {reset} = useFormContext();
+  const {reset, register, getValues} = useFormContext();
 
   const handleSalvar = (caixa: Caixa) => {
-    mutationForm.mutateAsync({caixa_id: caixa.id, andar_id: caixa.andar_id, predio_id: caixa.predio_id, espaco_ocupado_documento, numero_documento});
+    mutationForm.mutateAsync({
+      caixa_id: caixa.id, 
+      andar_id: caixa.andar_id, 
+      predio_id: caixa.predio_id, 
+      espaco_ocupado_documento, 
+      numero_documento,
+      observacao: getValues(`observacao_${caixa.id}`)
+    });
     setSearch(false);
     reset();
   }
 
   return(
-    <Box mt={"8"}>
+    <Box>
+      <Select placeholder="Filtrar todos" mb={"4"} {...register('predio_id')} size={"lg"}>
+        {predios_disponiveis.map((predio: {predio_id: number}) => (
+          <option key={predio.predio_id} value={predio.predio_id}>{`Prédio número ${predio.predio_id}`}</option>
+        ))}
+      </Select>
+
       <SimpleGrid spacing={10} columns={3} >
         {caixas.data?.map(caixa => (
           <Card 
@@ -46,9 +60,10 @@ export function ListaEnderecos({caixas, onPageChange, espaco_ocupado_documento, 
               </Flex>
             </CardHeader> 
             <CardBody>
-              <Flex direction={"column"} justify={"start"}>
-                <Text>Quantidade de Documentos na caixa: {caixa.documentos.length ?? 0}</Text>
-              </Flex>
+              <TextArea
+                placeholder="Informe aqui sua observação..."
+                {...register(`observacao_${caixa.id}`)}
+              />
             </CardBody>
             <CardFooter>
             <Button 

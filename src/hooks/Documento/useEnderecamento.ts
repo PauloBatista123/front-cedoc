@@ -1,8 +1,9 @@
 import { useToast } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { api } from "../../lib/axios";
-import { queryClient } from "../../lib/reactQuery";
-import { AxiosErrorData, Caixa, Documento, MetaPagination, ProximoEndereco } from "../../utils/interfaces";
+import { AxiosErrorData, Caixa, Documento, ProximoEndereco } from "../../utils/interfaces";
 
 interface useDocumentoProps {
   page: number;
@@ -19,6 +20,7 @@ interface GetDocumentoResponse {
     to: number;
     total: number;
   };
+  documento: Documento
 }
 async function getDocumento({page, filter}: useDocumentoProps): Promise<GetDocumentoResponse> {
 
@@ -27,6 +29,11 @@ async function getDocumento({page, filter}: useDocumentoProps): Promise<GetDocum
       page, ...filter
     }
   }).then((response) => response.data);
+
+  const documento: Documento = {
+    ...response.documento,
+    created_at: format(new Date(response.documento.created_at), "dd/MM/yyyy", { locale: ptBR} ),
+  };
 
   const proximoEndereco: ProximoEndereco = {
     caixa_id: response.proximo_endereco.caixa_id,
@@ -37,14 +44,16 @@ async function getDocumento({page, filter}: useDocumentoProps): Promise<GetDocum
     total_documentos_predio: response.predio.total_documentos,
     total_caixas_predio: response.predio.total_caixas,
     espaco_ocupado_documento: response.espaco_ocupado,
-    numero_documento: response.documento.documento
+    numero_documento: response.documento.documento,
+    predios_disponiveis: response.predios_disponiveis,
   };
 
-  const caixas = response.caixas
+  const caixas = response.caixas;
 
   return {
     proximoEndereco,
-    caixas
+    caixas,
+    documento
   }
 }
 

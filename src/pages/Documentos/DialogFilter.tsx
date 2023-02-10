@@ -11,14 +11,18 @@ import {
   Stack,
   Text,
   FormControl,
+  HStack,
+  SimpleGrid,
 } from '@chakra-ui/react'
 import { ArrowCircleRight } from 'phosphor-react'
 import { useForm, useFormContext, Controller } from 'react-hook-form';
 import { Input } from '../../components/Form/Input';
-import Select from "react-select"
+import Select, { SingleValue } from "react-select"
 import { useUnidades } from '../../hooks/Unidade/useUnidades';
 import { Select as SelectForm } from "../../components/Form/Select";
 import { useEffect } from 'react';
+import { useTipoDocumentos } from '../../hooks/TipoDocumental/useTipoDocumento';
+import { optionsSelectStyles } from '../../utils/select-styles';
 
 
 interface DialogFilterProps {
@@ -31,25 +35,21 @@ export function DialogFilter({ isOpen, onClose }: DialogFilterProps) {
   const { setValue, getValues: getValuesContext, formState: { isSubmitting } } = useFormContext();
   const { register, getValues: getValueForm, control } = useForm();
 
+  const { data: dataUnidades } = useUnidades({ page: -1, filter: {} });
+  const { data: dataTipos } = useTipoDocumentos({ page: -1, filter: {} });
+
+  const allUnidades = dataUnidades?.predios.map((item) => {
+    return { value: item.id, label: `Número ${item.id}` }
+  });
+
+  const allTipos = dataTipos?.tipos.map((item) => {
+    return { value: String(item.id), label: item.descricao }
+  });
+
   const handlleFilter = () => {
     setValue('actionFilter', getValueForm('filtro'));
     onClose();
   }
-
-  const { data: dataUnidades } = useUnidades({ page: -1, filter: {} })
-
-  const options = dataUnidades?.unidades.map((item) => {
-    return { value: item.id, label: item.nome }
-  });
-
-  const optionsOrder = [
-    { value: 'avenida', optionText: 'ID' },
-    { value: 'id', optionText: 'AVENIDA' },
-    { value: 'rua', optionText: 'RUA' },
-    { value: 'andar', optionText: 'ANDAR' },
-    { value: 'unidade_id', optionText: 'UNIDADE' },
-    { value: 'created_at', optionText: 'DATA DE CRIAÇÃO' }
-  ]
 
   return (
     <Drawer
@@ -68,75 +68,108 @@ export function DialogFilter({ isOpen, onClose }: DialogFilterProps) {
         </DrawerHeader>
 
         <DrawerBody>
-          {/* formulário de cadastro */}
+          {/* formulário de filtro */}
           <Stack
             spacing={"4"}
           >
             <Text>Informe os dados do filtro:</Text>
+            <Text fontSize={"sm"}>A situação do documento por padrão será "AGUARDANDO" caso não exista valor selecionado.</Text>
 
             <Input
               type='text'
-              placeholder='Identificação da Avenida'
-              {...register('filtro.avenida', { required: true })}
+              placeholder='Número do dossiê'
+              {...register('filtro.documento')}
             />
 
             <Input
               type='text'
-              placeholder='Identificação da Rua'
-              {...register('filtro.rua', { required: true })}
-            />
-
-            <Input
-              type='text'
-              placeholder='Identificação do andar'
-              {...register('filtro.andar', { required: true })}
+              placeholder='Número da caixa'
+              {...register('filtro.caixa')}
             />
 
             <Controller
-              name='filtro.unidade_id'
+              name='filtro.predio_id'
               control={control}
               render={({ field: { onChange, ref, value, name } }) => (
                 <Select
+                  // @ts-ignore
                   onChange={(e) => onChange(e?.value)}
-                  options={options}
-                  placeholder="Selecione unidade"
-                  styles={{
-                    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-                      return {
-                        ...styles,
-                        backgroundColor: isFocused ? '#d1d2dc' : '#eeeef2',
-                        color: '#1f2029',
-                        fontWeight: isFocused ? 'bold' : 'normal',
-                      }
-                    },
-                    control: (styles, { isFocused }) => ({
-                      ...styles,
-                      color: '#1f2029',
-                      backgroundColor: '#eeeef2',
-                      borderColor: '#eeeef2',
-                      paddingLeft: '16px',
-                      paddingRight: '16px',
-                      paddingTop: '4px',
-                      paddingBottom: '4px',
-                      border: isFocused ? '2px solid #00A091' : '2px solid #eeeef2',
-                      "&:hover": {
-                        backgroundColor: '#d1d2dc',
-                        borderColor: '#d1d2dc',
-                      },
-                      fontSize: '16px',
-                      "&:focus": {
-                        backgroundColor: '#d1d2dc',
-                        borderColor: '#00A091',
-                      }
-                    })
-                  }}
+                  options={allUnidades}
+                  placeholder="Selecione o prédio"
+                  styles={optionsSelectStyles}
                 />
               )}
             />
 
-            <FormControl>
-              <SelectForm placeholder='Ordenar por:' {...register('filtro.ordem')} options={optionsOrder} />
-            </FormControl>
+            <Controller
+              name='filtro.tipo_documento_id'
+              control={control}
+              render={({ field: { onChange, ref, value, name } }) => (
+                <Select
+                  // @ts-ignore
+                  onChange={(e) => onChange(e?.value)}
+                  options={allTipos}
+                  placeholder="Selecione o tipo documental"
+                  styles={optionsSelectStyles}
+                />
+              )}
+            />
+
+            <Controller
+              name='filtro.status'
+              control={control}
+              render={({ field: { onChange, ref, value, name } }) => (
+                <Select
+                  // @ts-ignore
+                  onChange={(e) => onChange(e?.value)}
+                  options={[
+                    {value: 'alocar', label: 'ALOCAR'},
+                    {value: 'arquivado', label: 'ARQUIVADO'},
+                    {value: 'retirar', label: 'RETIRAR'},
+                    {value: 'emprestimo', label: 'EMPRÉSTIMO'},
+                  ]}
+                  placeholder="Selecione a situação do documento"
+                  styles={optionsSelectStyles}
+                />
+              )}
+            />
+
+          <SimpleGrid columns={2} spacing={"2"}>
+            <Controller
+              name='filtro.ordenar_campo'
+              control={control}
+              render={({ field: { onChange, ref, value, name } }) => (
+                <Select
+                  // @ts-ignore
+                  onChange={(e) => onChange(e?.value)}
+                  options={[
+                    {value: 'documento', label: 'NUMERO'},
+                    {value: 'predio_id', label: 'PRÉDIO'},
+                    {value: 'espaco_ocupado', label: 'ESPAÇO OCUPADO'},
+                    {value: 'tipo_documento_id', label: 'TIPO DOCUMENTO'},
+                  ]}
+                  placeholder="Campo de ordenação"
+                  styles={optionsSelectStyles}
+                />
+              )}
+            />
+            <Controller
+              name='filtro.ordenar_direcao'
+              control={control}
+              render={({ field: { onChange, ref, value, name } }) => (
+                <Select
+                  // @ts-ignore
+                  onChange={(e) => onChange(e?.value)}
+                  options={[
+                    {value: 'desc', label: 'DESCRESCENTE'},
+                    {value: 'asc', label: 'CRESCENTE'},
+                  ]}
+                  placeholder="Tipo de ordenação"
+                  styles={optionsSelectStyles}
+                />
+              )}
+            />
+            </SimpleGrid>
 
           </Stack>
           {/* formulário de cadastro */}

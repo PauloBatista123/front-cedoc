@@ -39,14 +39,13 @@ export function ActionList(){
           {is_filter && (
             <IconButton aria-label='Limpar' onClick={limparFiltro} as="a" size={"md"} fontSize="sm" colorScheme={"gray"} cursor={"pointer"} mr={"2"} icon={<RiFilterOffFill />}></IconButton>
           )}
-            {/* <Button onClick={onOpenFilter} as="a" size={"md"} fontSize="sm" colorScheme={"twitter"} cursor={"pointer"} leftIcon={<Icon as={BsFunnel} onClick={onOpenFilter} fontSize="20"></Icon>}>
+            <Button onClick={onOpenFilter} as="a" size={"md"} fontSize="sm" colorScheme={"twitter"} cursor={"pointer"} leftIcon={<Icon as={BsFunnel} onClick={onOpenFilter} fontSize="20"></Icon>}>
               Filtrar
             </Button>
             <Button onClick={onOpenAdd} as="a" size={"md"} fontSize="sm" colorScheme={"blue"} cursor={"pointer"} leftIcon={<Icon as={BsPlusCircle} onClick={onOpenAdd} fontSize="20"></Icon>}>
               Novo
-            </Button> */}
+            </Button>
           </HStack>     
-            
         </Flex>
 
       </Flex>

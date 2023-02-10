@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import { api } from "../../lib/axios";
 import { queryClient } from "../../lib/reactQuery";
-import { Unidade } from "../../utils/interfaces";
+import { Predio, Unidade } from "../../utils/interfaces";
 
 interface useUnidadeProps {
   page: number;
@@ -11,7 +11,7 @@ interface useUnidadeProps {
 }
 
 interface GetUnidadeResponse {
-  unidades: Unidade[];
+  predios: Predio[];
   meta ?: {
     current_page: number;
     last_page: number;
@@ -29,10 +29,10 @@ async function getUnidades({page, filter}: useUnidadeProps): Promise<GetUnidadeR
     }
   }).then(response => response.data);
 
-  const unidades: Unidade[] = response.data.map((item: Unidade) => {
+  const predios: Predio[] = response.data.map((item: Predio) => {
     return {
       id: item.id,
-      nome: item.nome,
+      numero: item.numero,
       status: item.status,
       created_at: format(new Date(item.created_at), "d/MM/yyyy H:m", { locale: ptBR} ),
       updated_at: format(new Date(item.updated_at), "d 'de' MMM 'de' yyyy", { locale: ptBR} ),
@@ -60,7 +60,7 @@ async function getUnidades({page, filter}: useUnidadeProps): Promise<GetUnidadeR
   }
 
   return {
-    unidades,
+    predios,
     meta
   }
 }

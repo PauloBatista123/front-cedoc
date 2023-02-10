@@ -1,5 +1,6 @@
 import { Box, HStack, Text } from "@chakra-ui/react";
 import { FormProvider, useForm } from "react-hook-form";
+import { BsFillFileEarmarkTextFill } from "react-icons/bs";
 import {GrDocumentVerified} from "react-icons/gr"
 import { Lista } from "./Lista";
 
@@ -17,7 +18,7 @@ export function Documentos(){
         flexDirection={"row"}
       >
         <HStack>
-          <GrDocumentVerified size={32} />
+          <BsFillFileEarmarkTextFill size={32} />
           <Text fontSize={"2xl"}>
             Documentos
           </Text>
