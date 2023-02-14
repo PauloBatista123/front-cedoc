@@ -21,7 +21,8 @@ export function useMutationEnderecar(){
       numero_caixa: endereco?.caixa_id, 
       predio_id: endereco?.predio_id, 
       andar_id: endereco?.andar_id,
-      observacao: endereco?.observacao
+      observacao: endereco?.observacao,
+      ordem: endereco?.ordem,
   });
 
     return response.data;

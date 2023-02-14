@@ -65,6 +65,7 @@ export interface Caixa {
   created_at: string;
   updated_at: string;
   predio: Predio;
+  proxima_ordem: number;
   documentos: Documento[];
   documentos_count: number;
 }
@@ -79,6 +80,7 @@ export interface Documento {
   vencimento_operacao: string;
   data_liquidacao: string;
   data_expurgo: string;
+  ordem: number;
   tipo_documento: TipoDocumento;
   caixa: Caixa;
   predio: Predio;
@@ -86,13 +88,13 @@ export interface Documento {
   status: 'aguardando' | 'emprestimo' | 'arquivado';
   created_at: string;
   updated_at: string;
-
 }
 
 export interface ProximoEndereco {
   caixa_id: number;
   predio_id: number;
   andar_id: number;
+  ordem: number;
   ultima_caixa: Caixa;
   espaco_disponivel_predio: string;
   total_documentos_predio: number;
@@ -110,5 +112,6 @@ export interface useMutationEnderecarProps {
   caixa_id: number;
   predio_id: number;
   andar_id: number;
+  ordem: number;
   observacao: string;
 }

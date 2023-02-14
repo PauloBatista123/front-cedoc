@@ -24,6 +24,7 @@ export function ListaEnderecos({caixas, onPageChange, espaco_ocupado_documento, 
       caixa_id: caixa.id, 
       andar_id: caixa.andar_id, 
       predio_id: caixa.predio_id, 
+      ordem: caixa.proxima_ordem,
       espaco_ocupado_documento, 
       numero_documento,
       observacao: getValues(`observacao_${caixa.id}`)
@@ -55,8 +56,9 @@ export function ListaEnderecos({caixas, onPageChange, espaco_ocupado_documento, 
                 <Badge borderRadius={"8px"} p="2" colorScheme={"green"}>{caixa.status} {caixa.espaco_disponivel}</Badge>
               </Flex>
               <Flex align={"start"}>
+                <Text color={"gray.400"} fontSize={"sm"} mr={"2"}>Ordem: {caixa.proxima_ordem}</Text>
                 <Text color={"gray.400"} fontSize={"sm"} mr={"2"}>Prédio {caixa.predio.numero ?? 0}</Text>
-                <Text color={"gray.400"} fontSize={"sm"}>Andar {caixa.andar_id}</Text>
+                <Text color={"gray.400"} fontSize={"sm"} >Andar {caixa.andar_id}</Text>
               </Flex>
             </CardHeader> 
             <CardBody>

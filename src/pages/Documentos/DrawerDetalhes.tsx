@@ -112,6 +112,10 @@ export function DrawerDetalhes({id, onClose, isOpen}: DetalhesProps){
                   <Text fontWeight={"bold"}>{data?.documento.caixa.numero}</Text>
                 </Box>
                 <Box flexDir={"column"}>
+                  <Text fontSize={"small"}>Ordem do documento:</Text>
+                  <Text fontWeight={"bold"}>{data?.documento.ordem}</Text>
+                </Box>
+                <Box flexDir={"column"}>
                   <Text fontSize={"small"}>Andar:</Text>
                   <Text fontWeight={"bold"}>{data?.documento.caixa.andar_id}</Text>
                 </Box>

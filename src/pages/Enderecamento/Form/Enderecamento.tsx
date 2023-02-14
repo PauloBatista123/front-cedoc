@@ -8,6 +8,8 @@ import {
   AccordionPanel,
   AccordionIcon,
   Box,
+  Flex,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { useFormContext } from "react-hook-form";
 import { HiOutlineCheckCircle } from "react-icons/hi";
@@ -35,6 +37,7 @@ export function Enderecamenento({proximoEndereco, setSearch, documento}: Enderec
     total_documentos_predio, 
     total_caixas_predio,
     espaco_disponivel_predio,
+    ordem
   } = proximoEndereco;
 
   const handleSalvar = () => {
@@ -49,30 +52,42 @@ export function Enderecamenento({proximoEndereco, setSearch, documento}: Enderec
       borderRadius={"8px"}
       >
       <Grid templateColumns={"repeat(2, 1fr)"} gap={"4"}>
-          <Box >
-            <Input 
-              label="Número da caixa:"
-              type="text"
-              value={caixa_id}
-              name={'caixa_id'}
-            />
-            <Input 
-              label="Número da Prédio:"
-              type="text"
-              name={'predio_id'}
-              value={predio_id}
-            />
-            <Input 
-              label="Andar:"
-              type="text"
-              name={'andar_id'}
-              value={andar_id}
-            />
+          <Box>
+            <SimpleGrid columns={2} gap={2}>
+              <Input 
+                label="Número da caixa:"
+                type="text"
+                value={caixa_id}
+                name={'caixa_id'}
+              />
+              <Input 
+                label="Ordem:"
+                type="text"
+                name={'ordem'}
+                value={ordem}
+              />
+              
+            </SimpleGrid>
+            <SimpleGrid columns={2} gap={2}>
+              <Input 
+                label="Andar:"
+                type="text"
+                name={'andar_id'}
+                value={andar_id}
+              />
+              <Input 
+                label="Número da Prédio:"
+                type="text"
+                name={'predio_id'}
+                value={predio_id}
+              />
+            </SimpleGrid>
             <TextArea
               placeholder='Informações complementares...'
               size='md'
               resize={'none'}
               label="Observações:"
+              rows={6}
               {...register('observacao')}
             />
             <Button 

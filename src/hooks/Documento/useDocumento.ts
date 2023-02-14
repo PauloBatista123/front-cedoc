@@ -31,6 +31,7 @@ async function getDocumento({page, filter}: useDocumentoProps): Promise<GetDocum
       espaco_ocupado: documento.espaco_ocupado,
       nome_cooperado: documento.nome_cooperado,
       cpf_cooperado: documento.cpf_cooperado,
+      ordem: documento.ordem,
       data_expurgo: format(new Date(documento.data_expurgo), "d/MM/yyyy H:m", { locale: ptBR} ),
       data_liquidacao: format(new Date(documento.data_liquidacao), "d/MM/yyyy H:m", { locale: ptBR} ),
       status: documento.status,

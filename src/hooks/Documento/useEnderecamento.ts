@@ -46,6 +46,7 @@ async function getDocumento({page, filter}: useDocumentoProps): Promise<GetDocum
     espaco_ocupado_documento: response.espaco_ocupado,
     numero_documento: response.documento.documento,
     predios_disponiveis: response.predios_disponiveis,
+    ordem: response.proximo_endereco.ordem,
   };
 
   const caixas = response.caixas;
