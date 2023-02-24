@@ -20,7 +20,7 @@ export function Documentos(){
         <HStack>
           <BsFillFileEarmarkTextFill size={32} />
           <Text fontSize={"2xl"}>
-            Documentos
+            Dossiês
           </Text>
         </HStack>
       </Box>

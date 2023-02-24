@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
 import {BsFunnel, BsPlusCircle} from "react-icons/bs"
 import {RiFilterOffFill} from "react-icons/ri"
+import { DialogAdd } from "./DialogAdd";
 import { DialogFilter } from "./DialogFilter";
 
 export function ActionList(){
@@ -33,7 +34,7 @@ export function ActionList(){
       p={"4"}
     >
       <Flex justify="space-between" align="center">
-        <Heading size={"md"} fontWeight="normal" >Lista de documentos...</Heading>
+        <Heading size={"md"} fontWeight="normal" >Lista de dossiês...</Heading>
         <Flex align="end">
           <HStack>
           {is_filter && (
@@ -49,10 +50,18 @@ export function ActionList(){
         </Flex>
 
       </Flex>
+
       <DialogFilter 
         isOpen={isOpenFilter}
         onClose={onCloseFilter}
       />
+
+      <DialogAdd 
+        isOpen={isOpenAdd}
+        onClose={onCloseAdd}
+      />
+
+      
 
     </SimpleGrid>
   )

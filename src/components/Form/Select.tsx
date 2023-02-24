@@ -16,7 +16,7 @@ interface InputProps extends SelectProps {
 const SelectBase: ForwardRefRenderFunction<HTMLSelectElement, InputProps>  = ({name, label, type, error, options, ...rest}, ref) => {
   return(
     <FormControl isInvalid={!!error}>
-
+      { !!label && <FormLabel mt={"2"} htmlFor={name} >{label}</FormLabel> }
       <SelectForm
         name={name}
         id={name}

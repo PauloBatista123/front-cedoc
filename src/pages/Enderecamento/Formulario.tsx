@@ -52,16 +52,12 @@ export function Formulario() {
                 />
             </TabPanel>
             <TabPanel>
-              {data?.caixas.data.length > 0 ? (
                 <ListaEnderecos
                   caixas={data?.caixas}
                   onPageChange={setPage}
                   {...data?.proximoEndereco}
                   setSearch={setSearch}
                 />
-              ) : (
-                <Text>Não encontramos caixas disponíveis...</Text>
-              )}
             </TabPanel>
           </TabPanels>
         </Tabs>

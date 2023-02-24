@@ -25,7 +25,7 @@ export function TableList({documentos, meta, onOpenDetalhes, onPageChange, setDo
     <>
     <SimpleGrid columns={{md: 2, lg: 3}} gap={"3"}>
     {documentos?.map((documento) => (
-          <Card _hover={{backgroundColor: 'gray.25'}}>
+          <Card _hover={{backgroundColor: 'gray.25'}} key={documento.id}>
             <CardHeader borderBottom={"1px solid #dedede7d"}>
               <Flex justify={"space-between"}>
               <Box>
