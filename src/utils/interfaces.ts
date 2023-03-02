@@ -115,3 +115,19 @@ export interface useMutationEnderecarProps {
   ordem: number;
   observacao: string;
 }
+
+export interface Importacao {
+  id: number;
+  progress_now: number;
+  progress_max: number;
+  input: {
+    status: 'finished' | 'error' | 'progress';
+  };
+  output: {
+    documento: number;
+    status: string;
+  }[];
+  created_at: string;
+  updated_at: string;
+  progress_percent: number;
+}

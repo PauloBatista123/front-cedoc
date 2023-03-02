@@ -15,6 +15,7 @@ import { NavLink } from "./NavLink";
 import { SiGooglemaps, SiHomeassistantcommunitystore } from "react-icons/si";
 import { BsFillFileEarmarkTextFill, BsFillTagsFill } from "react-icons/bs";
 import {GrDocumentVerified} from "react-icons/gr"
+import { TbDatabaseImport } from "react-icons/tb";
 
 
 export function NavBar(){
@@ -45,6 +46,17 @@ export function NavBar(){
               <NavLink text="Tipos Documentais" Icon={BsFillTagsFill} href={"/tipo-documentos"}/>
               <NavLink text="Dossiês" Icon={BsFillFileEarmarkTextFill} href={"/documentos"}/>
               <NavLink text="Endereçamento" Icon={SiHomeassistantcommunitystore} href={"/enderecamento"}/>
+            </NavContent>
+            
+          </Box>
+          <Box
+            margin={"2"}
+            display={"flex"}
+            justifyContent={"space-between"}
+            alignItems={"flex-start"}
+          >
+            <NavContent title="Importações">
+                <NavLink text="Dossiês" Icon={TbDatabaseImport} href={"/importacao"}/>
             </NavContent>
           </Box>
         </DrawerBody>

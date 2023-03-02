@@ -1,7 +1,6 @@
 import {
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
@@ -9,16 +8,12 @@ import {
   Text,
   Alert,
   AlertIcon,
-  Flex,
   Card,
   CardBody,
-  SimpleGrid,
-  HStack,
   Box,
   Grid,
   GridItem,
 } from '@chakra-ui/react'
-import { format } from 'date-fns';
 
 import { useFindDocumento } from "../../hooks/Documento/useFindDocumento";
 

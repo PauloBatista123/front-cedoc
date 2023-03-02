@@ -22,6 +22,12 @@ export const validationSchemaNovoDocumento = zod.object({
   vencimento: zod.string().optional(),
 })
 
+export const validationSchemaImportarDossies = zod.object({
+  arquivo: zod.instanceof(File)
+})
+
 export type newFormDataEnderecamentoSearch = zod.infer<typeof validationSchemaEnderecamento>;
 
 export type newFormDataNovoDocumento = zod.infer<typeof validationSchemaNovoDocumento>;
+
+export type newFormDataImportarDossies = zod.infer<typeof validationSchemaImportarDossies>;
