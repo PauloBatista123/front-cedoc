@@ -27,9 +27,9 @@ export function useMutationEnderecar(){
 
     return response.data;
   }, {
-    onSuccess: (response) => {
-      queryClient.invalidateQueries(['espaco-disponivel'], {
-        refetchType: 'active'
+    onSuccess: async (response) => {
+      await queryClient.invalidateQueries(['espaco-disponivel'], {
+        refetchType: 'active',
       });
 
       toast({title: 'Documento registrado com sucesso!', description: `${response.msg}`, status: 'success', duration: 5000, isClosable: true, position: "top-right"});

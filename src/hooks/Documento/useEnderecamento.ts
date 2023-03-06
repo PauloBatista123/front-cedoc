@@ -1,9 +1,10 @@
 import { useToast } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import { Axios, AxiosError } from "axios";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { api } from "../../lib/axios";
-import { AxiosErrorData, Caixa, Documento, ProximoEndereco } from "../../utils/interfaces";
+import { AxiosErrorData, AxiosErrorResponse, Caixa, Documento, ProximoEndereco } from "../../utils/interfaces";
 
 interface useDocumentoProps {
   page: number;
@@ -60,11 +61,8 @@ async function getDocumento({page, filter}: useDocumentoProps): Promise<GetDocum
 
 export function useEnderecamento({page, filter}: useDocumentoProps){  
   const toast = useToast();
-  return useQuery(['espaco-disponivel', {page, filter}], () => filter ? getDocumento({page, filter}): null, {
+  return useQuery<GetDocumentoResponse | null, AxiosError<{error: string}>>(['espaco-disponivel', {page, filter}], () => filter ? getDocumento({page, filter}): null, {
     retry: false,
     refetchOnWindowFocus: false,
-    onError: (error: AxiosErrorData) => {
-      toast({title: 'Erro ao processar!', description: `${error.response.data.error}`, status: 'info', duration: 5000, isClosable: true, position: "top-right"});
-    }
-  },);
+  });
 }

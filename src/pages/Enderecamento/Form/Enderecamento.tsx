@@ -21,7 +21,7 @@ import { Documento, ProximoEndereco } from "../../../utils/interfaces";
 interface EnderecamenentoProps {
   proximoEndereco: ProximoEndereco;
   documento: Documento;
-  setSearch: (search: boolean) => void;
+  setSearch: () => void;
 }
 
 
@@ -40,9 +40,9 @@ export function Enderecamenento({proximoEndereco, setSearch, documento}: Enderec
     ordem
   } = proximoEndereco;
 
-  const handleSalvar = () => {
-    mutationForm.mutateAsync({...proximoEndereco, observacao: getValues('observacao')});
-    setSearch(false);
+  const handleSalvar = async () => {
+    await mutationForm.mutateAsync({...proximoEndereco, observacao: getValues('observacao')});
+    setSearch();
     reset();
   };
 
@@ -103,6 +103,7 @@ export function Enderecamenento({proximoEndereco, setSearch, documento}: Enderec
               loadingText={"Buscando..."}
               width={"100%"}
               mt={"4"}
+              isLoading={mutationForm.isLoading}
               onClick={handleSalvar}
             >
             Endereçar

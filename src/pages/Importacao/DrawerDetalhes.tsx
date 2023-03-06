@@ -13,7 +13,10 @@ import {
   Box,
   Grid,
   GridItem,
+  Input,
+  Select,
 } from '@chakra-ui/react'
+import { ChangeEvent, useState } from 'react';
 import { useFindImportacao } from '../../hooks/Importacao/useFindImportacao';
 import { DrawerDetalhesLogs } from './DrawerDetalhesLogs';
 
@@ -25,15 +28,22 @@ interface DetalhesProps {
 
 export function DrawerDetalhes({id, onClose, isOpen}: DetalhesProps){
 
-  const {data, isLoading} = useFindImportacao({id});
-  console.log(data);
+  const [filter, setFilter] = useState<string>('');
+  const {data, isLoading} = useFindImportacao({id, filter});
+
+  const handleKeyUpFilter = (e: ChangeEvent) => {
+    setFilter((e.target as HTMLInputElement).value);
+  }
+  
   return (
   <Drawer placement={"left"} onClose={onClose} isOpen={isOpen} size={"xl"}>
     <DrawerOverlay />
     <DrawerContent>
       <DrawerCloseButton />
       {isLoading ? (
-        <Text>Carregando...</Text>
+        <Box display={"flex"} flexDir={"row"} justifyContent={"center"} height={"100vh"}>
+          <Text fontSize={"2xl"} fontWeight={"bold"}>Carregando...</Text>
+        </Box>
       ): (
 
         <>
@@ -42,7 +52,7 @@ export function DrawerDetalhes({id, onClose, isOpen}: DetalhesProps){
         </DrawerHeader>
         <DrawerBody>
           {/* DRAWER BODY */}
-          <Alert rounded={"md"} status={'info'} variant='solid'>
+          <Alert rounded={"md"} status={data?.registro.input.status === 'error' ? 'error' : 'success'} variant='solid'>
             <AlertIcon />
             Status: 
             <Text textTransform={"uppercase"} fontWeight={"bold"} ml={"2"}>{data?.registro.input.status}</Text>
@@ -73,10 +83,20 @@ export function DrawerDetalhes({id, onClose, isOpen}: DetalhesProps){
           </Card>
           
 
-          <Text mt={"4"} fontSize={"small"} color={"gray.400"}>Processamento:</Text>
-          <DrawerDetalhesLogs 
-            registros={data?.registro.output}
-          />
+
+            <Text mt={"4"} fontSize={"small"} color={"gray.400"}>Processamento:</Text>
+
+            <Select id='filter_output' onChange={handleKeyUpFilter} disabled={data?.registro.output.error != 'false'? true : false}>
+              <option value="todos" selected={filter === 'todos' && true}>Todos os registros</option>
+              <option value="erros" selected={filter === 'erros' && true}>Processado com erros</option>
+              <option value="enviado" selected={filter === 'enviado' && true}>Registro cadastrado</option>
+            </Select>
+            
+            <DrawerDetalhesLogs 
+              registros={data?.registro.output.registros}
+              errors={data?.registro.output.error}
+            />
+
         </DrawerBody>
         </>
         )}

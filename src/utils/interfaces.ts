@@ -124,10 +124,23 @@ export interface Importacao {
     status: 'finished' | 'error' | 'progress';
   };
   output: {
-    documento: number;
-    status: string;
-  }[];
+    registros: RegistrosImportacao[];
+    error: string;
+  };
   created_at: string;
   updated_at: string;
   progress_percent: number;
+}
+
+export interface RegistrosImportacao {
+    documento: number;
+    status: string;
+}
+
+export interface AxiosErrorResponse {
+  response: {
+    data: {
+      msg: string;
+    }
+  }
 }

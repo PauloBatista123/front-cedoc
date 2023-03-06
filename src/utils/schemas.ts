@@ -23,7 +23,7 @@ export const validationSchemaNovoDocumento = zod.object({
 })
 
 export const validationSchemaImportarDossies = zod.object({
-  arquivo: zod.instanceof(File)
+  arquivo: zod.instanceof(FileList)
 })
 
 export type newFormDataEnderecamentoSearch = zod.infer<typeof validationSchemaEnderecamento>;

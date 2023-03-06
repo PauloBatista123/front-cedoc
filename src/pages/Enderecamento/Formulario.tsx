@@ -2,7 +2,7 @@
 import { ListaEnderecos } from "./ListaEnderecos";
 import { Enderecamenento } from "./Form/Enderecamento";
 import { SearchForm } from "./Form/SearchForm";
-import { Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Alert, AlertIcon, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useToast } from "@chakra-ui/react";
 import { useEnderecamento } from "../../hooks/Documento/useEnderecamento";
 import { useEffect, useState } from "react";
 import { EnderecoRecomendadoSkeleton } from "../../components/Skeleton/EnderecoRecomendado";
@@ -15,13 +15,20 @@ export function Formulario() {
   const [search, setSearch] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [filter, setFilter] = useState<newFormDataEnderecamentoSearch>();
-  const {data, isLoading, status } = useEnderecamento({ filter: filter, page });
+  const {data, isLoading, status, error, isError} = useEnderecamento({ filter: filter, page });
   const [tabIndex, setTabIndex] = useState(0);
   const watchFilterPredio = watch("predio_id");
+  const toast = useToast();
 
+   
   const handleClickSearch = (filterData: newFormDataEnderecamentoSearch) => {
     setFilter(filterData);
     !search && setSearch(true);
+  }
+
+  const handleSearchClose = () => {
+    console.log(search);
+    setSearch(false);
   }
 
   useEffect(() => {
@@ -33,10 +40,17 @@ export function Formulario() {
   return (
     <>
       <SearchForm handleSearch={handleClickSearch} />
+      {isError && search && (
+         <Alert status='info' rounded={"base"} m={"1"}>
+            <AlertIcon />
+            {error.response?.data.error}
+          </Alert>
+        )
+      }
       {isLoading ? (
         <EnderecoRecomendadoSkeleton/>
       ) : (
-        data?.proximoEndereco && status === 'success' && (
+        search && data?.proximoEndereco && status === 'success' && (
         <>
         <Tabs onChange={(index) => setTabIndex(index)} index={tabIndex} isFitted variant='enclosed-colored' mt={"4"} bg={"white"} borderRadius={"8px"} border={"1px solid #c0c0c065"}>
           <TabList mb='1em'>
@@ -47,7 +61,7 @@ export function Formulario() {
             <TabPanel>
                 <Enderecamenento
                   proximoEndereco={data?.proximoEndereco}
-                  setSearch={setSearch}
+                  setSearch={handleSearchClose}
                   documento={data?.documento}
                 />
             </TabPanel>
