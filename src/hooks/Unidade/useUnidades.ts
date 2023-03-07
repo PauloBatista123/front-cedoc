@@ -66,5 +66,7 @@ async function getUnidades({page, filter}: useUnidadeProps): Promise<GetUnidadeR
 }
 
 export function useUnidades({page, filter}: useUnidadeProps){
-  return useQuery(["unidades", {page, filter} ], () =>  getUnidades({page , filter}));
+  return useQuery(["unidades", {page, filter} ], () =>  getUnidades({page , filter}),{
+    refetchOnWindowFocus: false,
+  });
 }

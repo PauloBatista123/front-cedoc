@@ -55,5 +55,7 @@ async function getDocumento({page, filter}: useDocumentoProps): Promise<GetDocum
 }
 
 export function useDocumentos({page, filter}: useDocumentoProps){
-  return useQuery(['documentos', {page, filter}], () => getDocumento({page, filter}) );
+  return useQuery(['documentos', {page, filter}], () => getDocumento({page, filter}), {
+    refetchOnWindowFocus: false,
+  });
 }

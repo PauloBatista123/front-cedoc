@@ -67,5 +67,7 @@ async function getTipoDocumentos({page, filter}: UseTipoDocumentosProps): Promis
 }
 
 export function useTipoDocumentos({page, filter}: UseTipoDocumentosProps) {
-  return useQuery(['tipo-documentos', {page, filter}], () => getTipoDocumentos({page, filter}) );
+  return useQuery(['tipo-documentos', {page, filter}], () => getTipoDocumentos({page, filter}), {
+    refetchOnWindowFocus: false,
+  } );
 }
