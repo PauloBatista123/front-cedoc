@@ -33,7 +33,13 @@ export function Formulario() {
 
   useEffect(() => {
     watchFilterPredio !== undefined && setFilter((prevState) => {
-      return {numero: prevState!.numero, espaco_ocupado: prevState!.espaco_ocupado, predio_id: watchFilterPredio}
+      return {
+        numero: prevState!.numero, 
+        espaco_ocupado: prevState!.espaco_ocupado, 
+        cpf_cooperado: prevState!.cpf_cooperado, 
+        tipo_documento_id: prevState!.tipo_documento_id,
+        predio_id: watchFilterPredio
+      }
     });
   }, [watchFilterPredio]);
 
